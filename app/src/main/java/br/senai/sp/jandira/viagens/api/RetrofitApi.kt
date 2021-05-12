@@ -9,10 +9,17 @@ class RetrofitApi {
     companion object {
         fun getRetrofit() : Retrofit {
 
-            var retrofit = Retrofit.Builder()
+//            var retrofit = Retrofit.Builder()
+//                .baseUrl(BASE_URL)
+//                .addConverterFactory(GsonConverterFactory.create())
+//                .build()
+//            return retrofit
+
+            val retrofit = Retrofit.Builder()
                 .baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()
+
             return retrofit
 
         }

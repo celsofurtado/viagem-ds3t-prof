@@ -14,12 +14,13 @@ import br.senai.sp.jandira.viagens.model.DestinosRecentes
 import br.senai.sp.jandira.viagens.ui.DestinoDetailActivity
 import com.bumptech.glide.Glide
 
-class GaleriaFotosDestinoAdapter(val context: Context) : RecyclerView.Adapter<GaleriaFotosDestinoAdapter.Holder>() {
+class DestinoRecenteAdapter(val context: Context) : RecyclerView.Adapter<DestinoRecenteAdapter.Holder>() {
 
     var listRecentes: List<DestinosRecentes> = emptyList()
 
     fun updateListRecentes(lista: List<DestinosRecentes>) {
         this.listRecentes = lista
+        notifyDataSetChanged()
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {

@@ -6,7 +6,7 @@ import retrofit2.http.GET
 
 interface DestinosRecentesCall {
 
-    @GET("destinos")
+    @GET("destinos/recentes")
     fun getDestinosRecentes() : Call<List<DestinosRecentes>>
 
 

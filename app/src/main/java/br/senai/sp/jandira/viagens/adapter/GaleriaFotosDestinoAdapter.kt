@@ -4,13 +4,14 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.CheckBox
 import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import br.senai.sp.jandira.viagens.R
 import br.senai.sp.jandira.viagens.model.Foto
 import com.bumptech.glide.Glide
 
-class FotosDestinoRecenteAdapter(var context: Context) : RecyclerView.Adapter<FotosDestinoRecenteAdapter.ViewHolder>() {
+class GaleriaFotosDestinoAdapter(var context: Context) : RecyclerView.Adapter<GaleriaFotosDestinoAdapter.ViewHolder>() {
 
     var listaFotos: List<Foto> = listOf()
 
@@ -30,12 +31,22 @@ class FotosDestinoRecenteAdapter(var context: Context) : RecyclerView.Adapter<Fo
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val foto = listaFotos[position]
+
         Glide.with(context).load(foto.url).into(holder.imageDestino)
+
+        if (foto.destaque){
+            holder.checkBoxCapa.isChecked = foto.destaque
+            holder.checkBoxCapa.isClickable = false
+        } else {
+            holder.checkBoxCapa.visibility = View.GONE
+        }
+
     }
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
         val imageDestino: ImageView = view.findViewById(R.id.iv_foto_holder)
+        val checkBoxCapa: CheckBox = view.findViewById(R.id.check_box_capa)
 
     }
 }
