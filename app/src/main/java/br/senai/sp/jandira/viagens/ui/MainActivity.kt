@@ -1,9 +1,9 @@
 package br.senai.sp.jandira.viagens
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import br.senai.sp.jandira.viagens.adapter.DestinoRecenteAdapter
@@ -17,6 +17,7 @@ import retrofit2.Response
 class MainActivity : AppCompatActivity() {
 
     lateinit var rvDestinosRecentes: RecyclerView
+    lateinit var adapterDestinosRecentes: DestinoRecenteAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,20 +30,22 @@ class MainActivity : AppCompatActivity() {
                 this,
                 LinearLayoutManager.HORIZONTAL, false)
 
-        val adapterDestinosRecentes =
-            DestinoRecenteAdapter(setListaDestinosRecentes()!!, this)
-
+        adapterDestinosRecentes = DestinoRecenteAdapter(this)
         rvDestinosRecentes.adapter = adapterDestinosRecentes
+
+
+        setListaDestinosRecentes()
+
 
     }
 
-    private fun setListaDestinosRecentes() : List<DestinosRecentes>? {
+    private fun setListaDestinosRecentes() {
 
         var destinosRecentes: List<DestinosRecentes>? = listOf<DestinosRecentes>()
 
         val retrofit = RetrofitApi.getRetrofit()
-        val destinosRecentesCall = retrofit.create(DestinosRecentesCall::class.java)
 
+        val destinosRecentesCall = retrofit.create(DestinosRecentesCall::class.java)
         val call = destinosRecentesCall.getDestinosRecentes()
 
         call.enqueue(object : Callback<List<DestinosRecentes>> {
@@ -57,12 +60,10 @@ class MainActivity : AppCompatActivity() {
             ) {
                 destinosRecentes = response.body()
                 Log.i("Teste", destinosRecentes.toString())
+                adapterDestinosRecentes.updateListRecentes(destinosRecentes!!)
             }
 
         })
-
-
-        return destinosRecentes
 
     }
 }

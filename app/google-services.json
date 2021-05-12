@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "583632668137",
+    "project_id": "ds3tur-prof",
+    "storage_bucket": "ds3tur-prof.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:583632668137:android:6288a867452c45e85c3778",
+        "android_client_info": {
+          "package_name": "br.senai.sp.jandira.viagens"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "583632668137-99lpdum3er9hsjst7tgr4r6s3vt69il6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCg78UkNuNB32LQZEe4h2c1pVGmE91f71o"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "583632668137-99lpdum3er9hsjst7tgr4r6s3vt69il6.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
