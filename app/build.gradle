@@ -46,6 +46,7 @@ dependencies {
 
     // Carregar imagens a partir de uma URL na Web
     implementation 'com.github.bumptech.glide:glide:4.8.0'
+    implementation 'com.google.android.material:material:1.0.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.8.0'
 
     // Import the BoM for the Firebase platform

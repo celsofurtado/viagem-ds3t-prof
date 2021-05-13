@@ -53,6 +53,7 @@
         android:layout_marginTop="2dp"
         android:text="Aqui vai o comentário do usuário informado o que ele achou do destino. O comentário também será utilzado para determinar a popularidade do local, já que o usuário atribuirá uma nota."
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:textColor="@color/colorPrimaryDark"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_data_comentario" />

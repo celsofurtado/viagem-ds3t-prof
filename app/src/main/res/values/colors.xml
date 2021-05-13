@@ -7,4 +7,6 @@
 
     <color name="textViewBackground">#99007c91</color>
     <color name="textViewBackground1">#9900acc1</color>
+
+    <color name="colorAccentTransparent">#aaae52d4</color>
 </resources>

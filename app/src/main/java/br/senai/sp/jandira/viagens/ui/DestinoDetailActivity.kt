@@ -19,13 +19,14 @@ import br.senai.sp.jandira.viagens.model.Comentario
 import br.senai.sp.jandira.viagens.model.DestinosRecentes
 import br.senai.sp.jandira.viagens.model.Foto
 import com.bumptech.glide.Glide
+import com.google.android.material.appbar.CollapsingToolbarLayout
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
 class DestinoDetailActivity : AppCompatActivity() {
 
-    lateinit var textViewNomeDestino: TextView
+    //lateinit var textViewNomeDestino: TextView
     lateinit var textViewLocalizacao: TextView
     lateinit var imageViewDestino: ImageView
     lateinit var textValorDestino: TextView
@@ -34,23 +35,25 @@ class DestinoDetailActivity : AppCompatActivity() {
     lateinit var galeriaFotosDestinoAdapter: GaleriaFotosDestinoAdapter
     lateinit var destinoRecente: DestinosRecentes
     lateinit var buttonComentario: Button
+    lateinit var collapseToolbarLayout: CollapsingToolbarLayout
 
     lateinit var rvComentarios: RecyclerView
     lateinit var comentariosAdapter: ComentariosAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_destino_detail)
+        setContentView(R.layout.activity_destino_detail2)
 
         destinoRecente = intent.getSerializableExtra("destino") as DestinosRecentes
 
-        textViewNomeDestino = findViewById(R.id.tv_nome_destino)
+        //textViewNomeDestino = findViewById(R.id.tv_nome_destino)
         textViewLocalizacao = findViewById(R.id.tv_local)
         imageViewDestino = findViewById(R.id.iv_destino)
         textValorDestino = findViewById(R.id.tv_valor_destino)
         textDescricao = findViewById(R.id.tv_texto_descricao)
         rvGaleriaFotosDestino = findViewById(R.id.rv_galeria_fotos_destino)
         rvComentarios = findViewById(R.id.rv_comentarios)
+        collapseToolbarLayout = findViewById(R.id.collapsing_toolbar)
 
         buttonComentario = findViewById(R.id.button_comentario)
 
@@ -141,13 +144,14 @@ class DestinoDetailActivity : AppCompatActivity() {
     }
 
     private fun preencherActivity() {
-        textViewNomeDestino.text = "${destinoRecente.nome}"
+        //textViewNomeDestino.text = "${destinoRecente.nome}"
         textViewLocalizacao.text = "${destinoRecente.nomeCidade}/${destinoRecente.siglaEstado}"
+        collapseToolbarLayout.title = "${destinoRecente.nome}"
 
         if (destinoRecente.valor <= 0) {
             textValorDestino.text = "GRÁTIS"
         } else {
-            textValorDestino.text = "A partir de R$ ${String.format("%.2f", destinoRecente.valor)}"
+            textValorDestino.text = "R$ ${String.format("%.2f", destinoRecente.valor)}"
         }
 
         textDescricao.text = destinoRecente.descricao
