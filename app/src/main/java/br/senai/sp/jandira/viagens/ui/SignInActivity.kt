@@ -1,5 +1,6 @@
 package br.senai.sp.jandira.viagens.ui
 
+import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -65,6 +66,17 @@ class SignInActivity : AppCompatActivity() {
     private fun handleSignInResult(completedTask: Task<GoogleSignInAccount>) {
         try {
             val account: GoogleSignInAccount? = completedTask.getResult(ApiException::class.java)
+
+            if (account != null) {
+                val userData = getSharedPreferences("userData", Context.MODE_PRIVATE)
+                val editor = userData.edit()
+                editor.putString("id", account.id)
+                editor.putString("displayName", account.displayName)
+                editor.putString("email", account.email)
+                editor.putString("photoUrl", account.photoUrl.toString())
+                editor.apply()
+            }
+
             updateUi()
         } catch (e: ApiException) {
             Log.w("Fires", e.localizedMessage)

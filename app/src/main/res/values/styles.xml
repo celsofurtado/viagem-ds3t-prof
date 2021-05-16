@@ -8,4 +8,10 @@
         <item name="android:textColorPrimary">@android:color/white</item>
     </style>
 
+    <style name="dialogCustom" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="windowNoTitle">true</item>
+        <item name="android:windowMinWidthMajor">95%</item>
+        <item name="android:windowMinWidthMinor">95%</item>
+    </style>
+
 </resources>

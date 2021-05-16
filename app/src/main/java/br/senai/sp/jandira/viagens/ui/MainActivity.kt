@@ -1,5 +1,6 @@
 package br.senai.sp.jandira.viagens.ui
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -15,10 +16,6 @@ import br.senai.sp.jandira.viagens.model.DestinosRecentes
 import com.bumptech.glide.Glide
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
-import com.google.android.gms.tasks.OnCompleteListener
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.ktx.Firebase
-import kotlinx.android.synthetic.main.activity_main.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -32,6 +29,7 @@ class MainActivity : AppCompatActivity() {
     lateinit var textViewUserMail: TextView
     lateinit var userImage: ImageView
     lateinit var progressBar: ProgressBar
+    lateinit var editBusca: EditText
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,6 +39,7 @@ class MainActivity : AppCompatActivity() {
         textViewUserMail = findViewById(R.id.tv_user_email)
         userImage = findViewById(R.id.imageView)
         progressBar = findViewById(R.id.progressBar)
+        editBusca = findViewById(R.id.edit_busca)
 
 
         userImage.setOnClickListener {
@@ -49,11 +48,15 @@ class MainActivity : AppCompatActivity() {
         }
 
         val account = GoogleSignIn.getLastSignedInAccount(this)
+
         if (account != null){
-            textViewUserName.text = "${account.displayName}"
-            textViewUserMail.text = account.email
-            Log.i("PHOTO", account.photoUrl.toString())
-            Glide.with(this).load(account.photoUrl.toString()).into(userImage)
+            val userData = getSharedPreferences("userData", Context.MODE_PRIVATE)
+            textViewUserName.text = userData.getString("displayName", null)
+            textViewUserMail.text = userData.getString("email", null)
+
+            Glide.with(this)
+                .load(userData.getString("photoUrl", null))
+                .into(userImage)
         }
 
         rvDestinosRecentes = findViewById(R.id.rv_destinos_recentes)
@@ -66,11 +69,19 @@ class MainActivity : AppCompatActivity() {
         destinoRecenteAdapter = DestinoRecenteAdapter(this)
         rvDestinosRecentes.adapter = destinoRecenteAdapter
 
-
         setListaDestinosRecentes()
 
-
     }
+
+//    override fun onResume() {
+//        super.onResume()
+//        val userData = getSharedPreferences("userData", Context.MODE_PRIVATE)
+//        textViewUserName.text = userData.getString("displayName", null)
+//        textViewUserMail.text = userData.getString("id", null)
+//        Glide.with(this)
+//            .load(userData.getString("photoUrl", null))
+//            .into(userImage)
+//    }
 
     private fun setListaDestinosRecentes() {
 
@@ -108,9 +119,9 @@ class MainActivity : AppCompatActivity() {
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build()
         val mGoogleSignInClient = GoogleSignIn.getClient(this, gso)
         mGoogleSignInClient.signOut()
-            .addOnCompleteListener(this, OnCompleteListener<Void?> {
-                // ...
-            })
+            .addOnCompleteListener(this) {
+
+            }
         finish()
     }
 }

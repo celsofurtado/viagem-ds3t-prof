@@ -18,15 +18,17 @@ import br.senai.sp.jandira.viagens.api.RetrofitApi
 import br.senai.sp.jandira.viagens.model.Comentario
 import br.senai.sp.jandira.viagens.model.DestinosRecentes
 import br.senai.sp.jandira.viagens.model.Foto
+import br.senai.sp.jandira.viagens.repository.ComentarioRepository
 import com.bumptech.glide.Glide
 import com.google.android.material.appbar.CollapsingToolbarLayout
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class DestinoDetailActivity : AppCompatActivity() {
+class DestinoDetailActivity : AppCompatActivity(), DialogComment.DialogCommentListener {
 
-    //lateinit var textViewNomeDestino: TextView
+    var comentarioRepository: ComentarioRepository? = null
+
     lateinit var textViewLocalizacao: TextView
     lateinit var imageViewDestino: ImageView
     lateinit var textValorDestino: TextView
@@ -44,9 +46,10 @@ class DestinoDetailActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_destino_detail2)
 
+        comentarioRepository = ComentarioRepository(this)
+
         destinoRecente = intent.getSerializableExtra("destino") as DestinosRecentes
 
-        //textViewNomeDestino = findViewById(R.id.tv_nome_destino)
         textViewLocalizacao = findViewById(R.id.tv_local)
         imageViewDestino = findViewById(R.id.iv_destino)
         textValorDestino = findViewById(R.id.tv_valor_destino)
@@ -58,13 +61,20 @@ class DestinoDetailActivity : AppCompatActivity() {
         buttonComentario = findViewById(R.id.button_comentario)
 
         buttonComentario.setOnClickListener {
-            var dialog = CustomDialogComment()
-            dialog.show(supportFragmentManager, "customDialog")
-
+            abrirComentarioDialog()
         }
 
         preencherActivity()
         carregarListaFotos()
+        carregarListaComentarios()
+
+    }
+
+    private fun abrirComentarioDialog() {
+
+        val customDialogComment = DialogComment(this)
+        customDialogComment.updateDestino(destinoRecente.id)
+        customDialogComment.show(supportFragmentManager, "custom dialog comment")
 
     }
 
@@ -100,7 +110,6 @@ class DestinoDetailActivity : AppCompatActivity() {
                 fotos = response.body()!!
                 print(fotos.toString())
                 galeriaFotosDestinoAdapter.updateListaFotos(fotos)
-                carregarListaComentarios()
             }
 
         })
@@ -158,5 +167,9 @@ class DestinoDetailActivity : AppCompatActivity() {
         if (destinoRecente.urlFoto.trim().isNotEmpty()) {
             Glide.with(this).load(destinoRecente.urlFoto).into(imageViewDestino)
         }
+    }
+
+    override fun updateComments() {
+        carregarListaComentarios()
     }
 }

@@ -6,9 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.CheckBox
 import android.widget.ImageView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import br.senai.sp.jandira.viagens.R
 import br.senai.sp.jandira.viagens.model.Foto
+import br.senai.sp.jandira.viagens.ui.DialogImageDetail
 import com.bumptech.glide.Glide
 
 class GaleriaFotosDestinoAdapter(var context: Context) : RecyclerView.Adapter<GaleriaFotosDestinoAdapter.ViewHolder>() {
@@ -39,6 +41,13 @@ class GaleriaFotosDestinoAdapter(var context: Context) : RecyclerView.Adapter<Ga
             holder.checkBoxCapa.isClickable = false
         } else {
             holder.checkBoxCapa.visibility = View.GONE
+        }
+
+        holder.imageDestino.setOnClickListener {
+            //Toast.makeText(context, "Exibindo foto", Toast.LENGTH_SHORT).show()
+            val dialog = DialogImageDetail()
+            dialog.updateImageUrl(foto.url)
+            dialog.show((context as AppCompatActivity).supportFragmentManager, "customImageDialogDetail")
         }
 
     }

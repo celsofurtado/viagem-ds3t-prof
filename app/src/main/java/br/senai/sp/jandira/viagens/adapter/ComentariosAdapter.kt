@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.RatingBar
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import br.senai.sp.jandira.viagens.R
@@ -35,12 +34,13 @@ class ComentariosAdapter(var context: Context) : RecyclerView.Adapter<Comentario
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val comentario = comentarios[position]
 
-        holder.tvDisplayName.text = comentario.displayName
+        holder.tvDisplayName.text = comentario.usuario.displayName
         holder.tvComentario.text = comentario.comentario
-        holder.tvDataComentario.text = comentario.dataComentario.toString()
+        //holder.tvDataComentario.text = "15-08-2020"//comentario.dataComentario
+        holder.tvDataComentario.text = stringToDate(comentario.dataComentario)
         var nota: Double = comentario.nota.toDouble()
         holder.tvNota.text = String.format("%.1f", nota)
-        Glide.with(context).load(comentario.photoUrl).into(holder.ivUserPhoto)
+        Glide.with(context).load(comentario.usuario.photoUrl).into(holder.ivUserPhoto)
 
     }
 
@@ -54,7 +54,16 @@ class ComentariosAdapter(var context: Context) : RecyclerView.Adapter<Comentario
 
     }
 
-    fun format(date: LocalDate): String {
-        return ""
+    fun stringToDate(strDate: String): String {
+
+        // Converte a String recuperada da API em LocalDate
+        val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
+        val dt = LocalDate.parse(strDate, formatter)
+
+        // Converte o formato da LocalDate para o formato brasileiro
+        val dtPt = dt.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))
+
+        return dtPt
+
     }
 }

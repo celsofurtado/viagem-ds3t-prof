@@ -60,7 +60,7 @@
         </androidx.cardview.widget.CardView>
 
         <EditText
-            android:id="@+id/editTextTextPersonName"
+            android:id="@+id/edit_busca"
             android:layout_width="0dp"
             android:layout_height="48dp"
             android:layout_marginStart="16dp"
